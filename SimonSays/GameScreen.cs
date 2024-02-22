@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Media;
+using System.Drawing.Drawing2D;
 
 
 namespace SimonSays
@@ -27,18 +28,39 @@ namespace SimonSays
 
         private void GameScreen_Load(object sender, EventArgs e)
         {
-            Form1.pattern.Clear();
+            GraphicsPath circlePath = new GraphicsPath();
+            circlePath.AddEllipse(5, 5, 180, 180);
+
+            Region buttonRegion = new Region(circlePath);
+            Region buttonRegion90 = new Region(circlePath);
+            Region buttonRegion180 = new Region(circlePath);
+            Region buttonRegion270 = new Region(circlePath);
+            Matrix transformMatrix = new Matrix();
+
+            transformMatrix.RotateAt(90, new PointF(50, 50));
+
+            buttonRegion90.Transform(transformMatrix);
+            buttonRegion180.Transform(transformMatrix);
+            buttonRegion180.Transform(transformMatrix);
+            buttonRegion270.Transform(transformMatrix);
+            buttonRegion270.Transform(transformMatrix);
+            buttonRegion270.Transform(transformMatrix);
+
+            redButton.Region = buttonRegion90;
+            blueButton.Region = buttonRegion180;
+            greenButton.Region = buttonRegion;
+            yellowButton.Region = buttonRegion270;
+
             Refresh();
+            Form1.pattern.Clear();
             ComputerTurn();
         }
-
         private void ComputerTurn()
         {
             //TODO: get rand num between 0 and 4 (0, 1, 2, 3) and add to pattern list. Each number represents a button. For example, 0 may be green, 1 may be blue, etc.
 
             randNum = new Random().Next(0, 4);
             Form1.pattern.Add(randNum);
-            randNumLabel.Text = $"{randNum}";
 
             foreach (int randNum in Form1.pattern)
             {   
@@ -85,7 +107,6 @@ namespace SimonSays
                 Thread.Sleep(500);
                 resetToColor();
                 guess++;
-                guessesLabel.Text = $"{guess}";
                 if (Form1.pattern.Count() == guess)
                 {
                     ComputerTurn();
@@ -115,7 +136,6 @@ namespace SimonSays
                 Thread.Sleep(500);
                 resetToColor();
                 guess++;
-                guessesLabel.Text = $"{guess}";
                 if (Form1.pattern.Count() == guess)
                 {
                     ComputerTurn();
@@ -137,7 +157,6 @@ namespace SimonSays
                 Thread.Sleep(500);
                 resetToColor();
                 guess++;
-                guessesLabel.Text = $"{guess}";
                 if (Form1.pattern.Count() == guess)
                 {
                     ComputerTurn();
@@ -158,7 +177,6 @@ namespace SimonSays
                 Thread.Sleep(500);
                 resetToColor();
                 guess++;
-                guessesLabel.Text = $"{guess}";
                 if (Form1.pattern.Count() == guess)
                 {
                     ComputerTurn();
