@@ -7,7 +7,7 @@ namespace SimonSays
 {
     public partial class Form1 : Form
     {
-        //TODO: create a List to store the pattern. Must be accessable on other screens
+        //pattern list that sorts color values
         public static List<int> pattern = new List<int>();
         public Form1()
         {
@@ -16,12 +16,14 @@ namespace SimonSays
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //loads menu screen on start
             MenuScreen ms = new MenuScreen();
             Form f = this.FindForm();
             ChangeScreen(this, ms);
         }
         public static void ChangeScreen(object sender, UserControl next)
         {
+            //Changes screens
             Form f;
 
             if (sender is Form)

@@ -12,7 +12,7 @@ namespace SimonSays
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            //TODO: remove this screen and start the GameScreen
+            //goes to game screen
             GameScreen gs = new GameScreen();
             Form f = this.FindForm();
             Form1.ChangeScreen(this, gs);
@@ -21,7 +21,7 @@ namespace SimonSays
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            //TODO: end the application
+            //exits program
             Form f = this.FindForm();
             System.Windows.Forms.Application.Exit();
         }

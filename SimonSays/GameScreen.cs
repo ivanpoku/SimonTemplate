@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Description:     A Basic Simon Game
+ * Author:      Vaniya Pokusaev           
+ * Date:        2024-02-22         
+ */
+
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -12,9 +18,10 @@ namespace SimonSays
 {
     public partial class GameScreen : UserControl
     {
-        //TODO: create an int guess variable to track what part of the pattern the user is at
         int guess;
         int randNum;
+
+        //Sounds
         SoundPlayer greenPlayer = new SoundPlayer(Properties.Resources.green);
         SoundPlayer redPlayer = new SoundPlayer(Properties.Resources.red);
         SoundPlayer bluePlayer = new SoundPlayer(Properties.Resources.blue);
@@ -28,6 +35,8 @@ namespace SimonSays
 
         private void GameScreen_Load(object sender, EventArgs e)
         {
+
+            //Rounded Buttons
             GraphicsPath circlePath = new GraphicsPath();
             circlePath.AddEllipse(5, 5, 180, 180);
 
@@ -51,13 +60,15 @@ namespace SimonSays
             greenButton.Region = buttonRegion;
             yellowButton.Region = buttonRegion270;
 
+            //Clears Pattern and Starts Game
             Refresh();
             Form1.pattern.Clear();
             ComputerTurn();
         }
         private void ComputerTurn()
         {
-            //TODO: get rand num between 0 and 4 (0, 1, 2, 3) and add to pattern list. Each number represents a button. For example, 0 may be green, 1 may be blue, etc.
+            //Generates Random Number and Adds to Pattern List
+            //Lights up colors appropriate to random number
 
             randNum = new Random().Next(0, 4);
             Form1.pattern.Add(randNum);
@@ -87,18 +98,16 @@ namespace SimonSays
                         Refresh();
                         break;
                 }
-
                 Thread.Sleep(500);
                 resetToColor();
             }
-            //TODO: set guess value back to 0
             guess = 0;
         }
-
-        //TODO: create one of these event methods for each button
         private void greenButton_Click(object sender, EventArgs e)
         {
-            //TODO: is the value in the pattern list at index [guess] equal to a green?
+            //Checks if the random number is equal to color
+            //adds one to guess value, computer.
+            //If the pattern length isn't equal to guess value, gameover
             if (Form1.pattern[guess] == 0)
             {
                 greenPlayer.Play();
@@ -119,11 +128,11 @@ namespace SimonSays
         }
         public void GameOver()
         {
+            //Opens gameover screen
             GameOverScreen gos = new GameOverScreen();
             goPlayer.Play();
             Form f = this.FindForm();
             Form1.ChangeScreen(this, gos);
-            //TODO: close this screen and open the GameOverScreen
 
         }
         private void redButton_Click(object sender, EventArgs e)
@@ -189,12 +198,12 @@ namespace SimonSays
         }
         public void resetToColor()
         {
+            //Resets buttons to original colors
             greenButton.BackColor = Color.ForestGreen;
             redButton.BackColor = Color.DarkRed;
             blueButton.BackColor = Color.DarkBlue;
             yellowButton.BackColor = Color.Goldenrod;
             Refresh();
         }
-
     }
 }
